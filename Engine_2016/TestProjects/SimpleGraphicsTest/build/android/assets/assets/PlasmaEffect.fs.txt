@@ -1,0 +1,21 @@
+// Fragment shader
+
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
+precision mediump float;
+#endif
+
+varying   vec4 g_vVSColor;
+varying   vec2 g_vVTexCoord;
+
+uniform float t;
+
+void main()
+{
+	//gl_FragColor = g_vVSColor;
+	float x = g_vVTexCoord.x * 256;
+	float y = g_vVTexCoord.y * 256;
+	float vv = 0.3 * ((0.5 + (0.5 * sin(x / 7.0 + t))) +(0.5 + (0.5 * sin(y / 5.0 - t))) + (0.5 + (0.5 * sin((x + y) / 6.0 - t))) +(0.5 + (0.5 * sin(sqrt(float(x*x + y*y)) / 4.0 - t))));
+	gl_FragColor = g_vVSColor * vv;
+};
