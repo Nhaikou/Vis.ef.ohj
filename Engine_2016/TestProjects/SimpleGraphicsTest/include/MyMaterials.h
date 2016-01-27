@@ -21,5 +21,5 @@ public:
 
 private:
 	const SharedShaderValues* m_sharedShaderValues;
-	GLint m_id, m_id2;
+	GLint m_id, m_id2, m_id3;
 };

@@ -223,6 +223,6 @@ void engineAssert(const char* expression, const char* file, int line )
 	s.sprintf("Assertation failed at %s:%d: %s", file, line, expression );
 	LOG_ERROR(s.c_str());
 	throw std::exception(s.c_str());
-}
+  }
 
 
