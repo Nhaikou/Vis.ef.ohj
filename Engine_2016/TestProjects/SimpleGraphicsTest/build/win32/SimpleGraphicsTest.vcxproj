@@ -100,6 +100,7 @@
     <ClInclude Include="..\..\include\FullScreenQuadShaderScene.h" />
     <ClInclude Include="..\..\include\MyMaterials.h" />
     <ClInclude Include="..\..\include\scene.h" />
+    <ClInclude Include="..\..\include\SimpleMeshRenderingScene.h" />
     <ClInclude Include="..\..\include\teapot.h" />
     <ClInclude Include="..\..\include\TriangleScene.h" />
   </ItemGroup>
@@ -111,6 +112,10 @@
   <ItemGroup>
     <None Include="..\..\assets\FullScreenQuad.vertexshader" />
     <None Include="..\..\assets\PlasmaEffect.fragmentshader" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="assets\Simple3d.fs.txt" />
+    <Text Include="assets\Simple3d.vs.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
