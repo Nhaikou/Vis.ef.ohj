@@ -93,6 +93,11 @@ public:
 			slmath::vec3(0.0f, 15.0f, 0.0f),
 			slmath::vec3(0.0f, 1.0f, 0.0f));
 
+		//Update teapot model matrix
+		m_matModel = slmath::rotationX(-3.1415 * 0.5f); // 90 degrees around X-axis
+		m_matModel = slmath::rotationY(m_totalTime) * m_matModel; //Rotate according to total time
+		m_matModel = slmath::translation(slmath::vec3(0.0f, 0.0f, 0.0f)) * m_matModel; //Translate
+
 		// Calculate needed stuff for m_sharedValues
 		m_sharedValues.matModel = m_matModel;
 		m_sharedValues.matView = m_matView;
@@ -108,11 +113,6 @@ public:
 
 		m_sharedValues.lightPos = slmath::vec3(0.0, 70.0f, 70.0f);
 		m_sharedValues.camPos = slmath::vec3(0.0, 70.0f, 70.0f);
-
-		//Update teapot model matrix
-		m_matModel = slmath::rotationX(-3.1415 * 0.5f); // 90 degrees around X-axis
-		m_matModel = slmath::rotationY(m_totalTime) * m_matModel; //Rotate according to total time
-		m_matModel = slmath::translation(slmath::vec3(0.0f, 0.0f, 0.0f)) * m_matModel; //Translate
 	}
 
 	virtual void render(graphics::ESContext* esContext)
@@ -143,6 +143,7 @@ public:
 		checkOpenGL();
 
 		m_mesh->render();
+		
 		glDisable(GL_CULL_FACE);
 		glDisable(GL_DEPTH_TEST);
 		checkOpenGL();
