@@ -16,6 +16,6 @@ void main()
 	//gl_FragColor = g_vVSColor;
 	float x = g_vVTexCoord.x * 256;
 	float y = g_vVTexCoord.y * 256;
-	float vv = 0.3 * tan((0.5 + (0.5 * cos(x / 5.0 + t))) +(0.5 + (0.5 * sin(y / 8.0 - t))) + (0.5 + (0.5 * sin((x + y) / 3.0 - t))) +(0.5 + (0.5 * cos(sqrt(float(x*x + y*y)) / 4.0 - t))));
+	float vv = 0.3 * -tan((0.5 + (0.5 * sin(x / 3.0 + t))) +(0.5 + (0.5 * sin(y / 8.0 - t))) + (0.5 + (0.5 * sin((x + y) / 3.0 - t))) +(0.5 + (0.5 * cos(sqrt(float(x*x + y*y)) / 4.0 - t))));
 	gl_FragColor = g_vVSColor * vv;
 };

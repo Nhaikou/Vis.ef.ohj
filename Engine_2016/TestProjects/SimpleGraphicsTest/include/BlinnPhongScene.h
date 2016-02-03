@@ -4,10 +4,10 @@
 #include "MyMaterials.h"
 #include "teapot.h"
 
-class SimpleMeshRenderingScene : public Scene
+class BlinnPhongScene : public Scene
 {
 public:
-	SimpleMeshRenderingScene()
+	BlinnPhongScene()
 	{
 		FRM_SHADER_ATTRIBUTE attributes[2] =
 		{
@@ -18,17 +18,25 @@ public:
 		int numAttributes = sizeof(attributes) / sizeof(FRM_SHADER_ATTRIBUTE);
 
 		//Load shader
-		m_shader = new graphics::Shader("assets/Simple3d.vs.txt",
-			"assets/Simple3d.fs.txt", attributes, numAttributes);
+		m_shader = new graphics::Shader("assets/Blinn-phong.vertexShader",
+			"assets/Blinn-phong.fragmentShader", attributes, numAttributes);
 
-		m_material = new GlobalShaderUniforms(m_shader, &m_sharedValues);
+		SimpleMaterialUniforms* simpleMaterialUniforms = new SimpleMaterialUniforms(m_shader, &m_sharedValues);
+		
+		// Material values for mesh
+		simpleMaterialUniforms->vAmbient = slmath::vec4(0.5f, 0.2f, 1.0f, 1.0f);
+		simpleMaterialUniforms->vDiffuse = slmath::vec4(0.5f, 0.2f, 1.0f, 1.0f);
+		simpleMaterialUniforms->vSpecular = slmath::vec4(1.0f, 1.0f, 1.0f, 5.0f);
+
+		m_material = simpleMaterialUniforms;
+
 		checkOpenGL();
 
 		//Create mesh
 		m_mesh = createTeapotMesh();
 	}
 
-	virtual ~SimpleMeshRenderingScene()
+	virtual ~BlinnPhongScene()
 	{
 	}
 
@@ -69,6 +77,7 @@ public:
 		{
 			m_sharedValues.totalTime = 0.0;
 		}
+
 		//Camera perspective matrix = Field of view, aspect ratio 
 		//near plane distance and far plane distance
 		float fAspect = (float)esContext->width / (float)esContext->height;
@@ -83,6 +92,22 @@ public:
 			slmath::vec3(0.0f, 70.0f, 70.0f),
 			slmath::vec3(0.0f, 15.0f, 0.0f),
 			slmath::vec3(0.0f, 1.0f, 0.0f));
+
+		// Calculate needed stuff for m_sharedValues
+		m_sharedValues.matModel = m_matModel;
+		m_sharedValues.matView = m_matView;
+		m_sharedValues.matProj = m_matProjection;
+
+		slmath::mat4 matModelView = m_matView * m_matModel;
+		slmath::mat4 matModelViewProj = m_matProjection * matModelView;
+		slmath::mat4 matNormal = slmath::transpose(slmath::inverse(matModelView));
+
+		m_sharedValues.matModelView = matModelView;
+		m_sharedValues.matNormal = matNormal;
+		m_sharedValues.matModelViewProj = matModelViewProj;
+
+		m_sharedValues.lightPos = slmath::vec3(0.0, 70.0f, 70.0f);
+		m_sharedValues.camPos = slmath::vec3(0.0, 70.0f, 70.0f);
 
 		//Update teapot model matrix
 		m_matModel = slmath::rotationX(-3.1415 * 0.5f); // 90 degrees around X-axis

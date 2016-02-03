@@ -33,7 +33,7 @@ public:
 
 	virtual ~FullScreenQuadShaderScene()
 	{
-		glDeleteProgram(m_hShaderProgram);
+		//glDeleteProgram(m_hShaderProgram);
 		LOG("FullScreenQuadShaderScene destruct");
 	}
 
