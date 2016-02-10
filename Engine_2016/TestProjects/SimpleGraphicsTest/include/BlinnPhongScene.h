@@ -1,6 +1,8 @@
 #include "scene.h"
 #include <graphics/Mesh.h>
 #include <graphics/Shader.h>
+#include <graphics/Texture.h>
+#include <graphics/Image.h>
 #include "MyMaterials.h"
 #include "teapot.h"
 
@@ -23,6 +25,16 @@ public:
 
 		SimpleMaterialUniforms* simpleMaterialUniforms = new SimpleMaterialUniforms(m_shader, &m_sharedValues);
 		
+		
+		m_image = graphics::Image::loadFromTGA("assets/Fieldstone.tga");
+
+
+		//m_texture = new graphics::Texture();
+
+		m_texture2d = new graphics::Texture2D();
+		
+		m_texture2d->setData(m_image);
+
 		// Material values for mesh
 		simpleMaterialUniforms->vAmbient = slmath::vec4(0.5f, 0.2f, 1.0f, 1.0f);
 		simpleMaterialUniforms->vDiffuse = slmath::vec4(0.5f, 0.2f, 1.0f, 1.0f);
@@ -147,6 +159,9 @@ public:
 	}
 
 private:
+	core::Ref<graphics::Image> m_image;
+	core::Ref<graphics::Texture> m_texture;
+	core::Ref<graphics::Texture2D> m_texture2d;
 	core::Ref<graphics::Mesh> m_mesh;
 	core::Ref<graphics::Shader> m_shader;
 	SharedShaderValues m_sharedValues;
