@@ -24,7 +24,7 @@ public:
 		m_shader = new graphics::Shader("assets/Blinn-phong-textured.vertexShader",
 			"assets/Blinn-phong-textured.fragmentShader", attributes, numAttributes);
 
-		SimpleMaterialUniforms* simpleMaterialUniforms = new SimpleMaterialUniforms(m_shader, &m_sharedValues);
+		SimpleMaterialWithTextureUniforms* simpleMaterialUniforms = new SimpleMaterialWithTextureUniforms(m_shader, &m_sharedValues);
 
 		// Material values for mesh
 		simpleMaterialUniforms->vAmbient = slmath::vec4(0.5f, 0.2f, 1.0f, 1.0f);
