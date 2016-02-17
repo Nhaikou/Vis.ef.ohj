@@ -1,25 +1,28 @@
 #include "scene.h"
 #include <graphics/Mesh.h>
 #include <graphics/Shader.h>
+#include <graphics/Texture.h>
+#include <graphics/Image.h>
 #include "MyMaterials.h"
 #include "teapot.h"
 
-class BlinnPhongScene : public Scene
+class BlinnTextureScene : public Scene
 {
 public:
-	BlinnPhongScene()
+	BlinnTextureScene()
 	{
-		FRM_SHADER_ATTRIBUTE attributes[2] =
+		FRM_SHADER_ATTRIBUTE attributes[3] =
 		{
 			{ "g_vPositionOS", graphics::ATTRIB_POSITION },
-			{ "g_vNormalOS", graphics::ATTRIB_NORMAL }
+			{ "g_vNormalOS", graphics::ATTRIB_NORMAL },
+			{ "g_texCoordsOS", graphics::ATTRIB_UV}
 		};
 
 		int numAttributes = sizeof(attributes) / sizeof(FRM_SHADER_ATTRIBUTE);
 
 		//Load shader
-		m_shader = new graphics::Shader("assets/Blinn-phong.vertexShader",
-			"assets/Blinn-phong.fragmentShader", attributes, numAttributes);
+		m_shader = new graphics::Shader("assets/Blinn-phong-textured.vertexShader",
+			"assets/Blinn-phong-textured.fragmentShader", attributes, numAttributes);
 
 		SimpleMaterialUniforms* simpleMaterialUniforms = new SimpleMaterialUniforms(m_shader, &m_sharedValues);
 
@@ -28,6 +31,12 @@ public:
 		simpleMaterialUniforms->vDiffuse = slmath::vec4(0.5f, 0.2f, 1.0f, 1.0f);
 		simpleMaterialUniforms->vSpecular = slmath::vec4(1.0f, 1.0f, 1.0f, 5.0f);
 
+		// Loading texture
+		m_image = graphics::Image::loadFromTGA("assets/Fieldstone.tga");
+		m_texture = new graphics::Texture2D();
+		m_texture->setData(m_image);
+
+		simpleMaterialUniforms->diffuseMap = m_texture;
 		m_material = simpleMaterialUniforms;
 
 		checkOpenGL();
@@ -36,7 +45,7 @@ public:
 		m_mesh = createTeapotMesh();
 	}
 
-	virtual ~BlinnPhongScene()
+	virtual ~BlinnTextureScene()
 	{
 	}
 
@@ -55,6 +64,10 @@ public:
 
 			new graphics::VertexArrayImpl<slmath::vec3>
 			(graphics::ATTRIB_NORMAL, (slmath::vec3*)TeapotData::normals,
+			TeapotData::numVertices),
+
+			new graphics::VertexArrayImpl<slmath::vec3>
+			(graphics::ATTRIB_UV, (slmath::vec3*)TeapotData::texCoords,
 			TeapotData::numVertices)
 		};
 
@@ -140,13 +153,15 @@ public:
 		checkOpenGL();
 
 		m_mesh->render();
-		
+
 		glDisable(GL_CULL_FACE);
 		glDisable(GL_DEPTH_TEST);
 		checkOpenGL();
 	}
 
 private:
+	core::Ref<graphics::Image> m_image;
+	core::Ref<graphics::Texture2D> m_texture;
 	core::Ref<graphics::Mesh> m_mesh;
 	core::Ref<graphics::Shader> m_shader;
 	SharedShaderValues m_sharedValues;

@@ -15,13 +15,14 @@ struct MATERIAL
 };
 
 // Uniforms
-uniform sampler2D s_diffuseMap;
 uniform MATERIAL g_Material;
+uniform sampler2D s_diffuseMap;
 
 // Varyings
 varying vec3 g_vViewVecES;
 varying vec3 g_vNormalES;
 varying vec3 g_vLightVecES;
+varying vec3 g_texCoordsOS;
 
 void main()
 {
@@ -34,6 +35,8 @@ void main()
 	float NdotL = saturate(dot(vNormal, vLight));
 	float NdotH = saturate(dot(vNormal, vHalf));
 	
+	vec4 texColor = texture2D(s_diffuseMap, vec2(g_texCoordsOS),1.0).rgba;
+
 	// Compute the lightning in eye-space
 	float fDiffuse = NdotL;
 	
@@ -41,7 +44,7 @@ void main()
 	float SelfShadow = 4.0 * fDiffuse;
 	
 	// Combine lightning with the material properties
-	gl_FragColor.rgba = vec4(0.15,0.15,0.15,0.15) * g_Material.vAmbient;
-	gl_FragColor.rgba += g_Material.vDiffuse * fDiffuse;
+	gl_FragColor.rgba = vec4(0.15,0.15,0.15,0.15) * g_Material.vAmbient * texColor;
+	gl_FragColor.rgba += g_Material.vDiffuse * fDiffuse * texColor;
 	gl_FragColor.rgb += SelfShadow * vec3 (0.15,0.15,0.15) * g_Material.vSpecular.xyz * fSpecular;
 }

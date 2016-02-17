@@ -97,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\BlinnPhongScene.h" />
+    <ClInclude Include="..\..\include\BlinnTextureScene.h" />
     <ClInclude Include="..\..\include\FullScreenQuadScene.h" />
     <ClInclude Include="..\..\include\FullScreenQuadShaderScene.h" />
     <ClInclude Include="..\..\include\MyMaterials.h" />
@@ -113,6 +114,8 @@
   <ItemGroup>
     <None Include="..\..\assets\FullScreenQuad.vertexshader" />
     <None Include="..\..\assets\PlasmaEffect.fragmentshader" />
+    <None Include="assets\Blinn-phong-textured.fragmentShader" />
+    <None Include="assets\Blinn-phong-textured.vertexShader" />
     <None Include="assets\Blinn-phong.fragmentShader" />
     <None Include="assets\Blinn-phong.vertexShader" />
   </ItemGroup>

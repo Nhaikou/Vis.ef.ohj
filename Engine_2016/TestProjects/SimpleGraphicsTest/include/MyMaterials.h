@@ -2,6 +2,7 @@
 
 #include "graphics\Shader.h"
 #include "core\Object.h"
+#include "graphics\Texture.h"
 
 struct SharedShaderValues : public core::Object
 {
@@ -38,6 +39,7 @@ public:
 	slmath::vec4 vAmbient;		// Ambient color of the material (rgba)
 	slmath::vec4 vDiffuse;		// Ambient color of the material (rgba)
 	slmath::vec4 vSpecular;		// Specular color of the material (rgb). Specular exponent (a)
+	core::Ref<graphics::Texture> diffuseMap;
 
 public:
 	SimpleMaterialUniforms(graphics::Shader* shader, SharedShaderValues* sharedValues = 0);
@@ -51,4 +53,5 @@ private:
 	GLint m_materialAmbientLoc;
 	GLint m_materialDiffuseLoc;
 	GLint m_materialSpecularLoc;
+	GLint m_diffuseMapLocation;
 };

@@ -20,6 +20,7 @@ void GlobalShaderUniforms::getUniformLocations(graphics::Shader* shader)
 	m_ids[5] = glGetUniformLocation(shader->getProgram(), "g_matModelViewProj");
 	m_ids[6] = glGetUniformLocation(shader->getProgram(), "g_lightPos");
 	m_ids[7] = glGetUniformLocation(shader->getProgram(), "g_camPos");
+
 }
 
 void GlobalShaderUniforms::bind(graphics::Shader* shader)
@@ -67,6 +68,7 @@ void SimpleMaterialUniforms::getUniformLocations(graphics::Shader* shader)
 	m_materialAmbientLoc = glGetUniformLocation(shader->getProgram(), "g_Material.vAmbient");
 	m_materialDiffuseLoc = glGetUniformLocation(shader->getProgram(), "g_Material.vDiffuse");
 	m_materialSpecularLoc = glGetUniformLocation(shader->getProgram(), "g_Material.vSpecular");
+	m_diffuseMapLocation = glGetUniformLocation(shader->getProgram(), "s_diffuseMap");
 }
 
 void SimpleMaterialUniforms::bind(graphics::Shader* shader)
@@ -76,6 +78,10 @@ void SimpleMaterialUniforms::bind(graphics::Shader* shader)
 	glUniform4fv(m_materialAmbientLoc, 1, &vAmbient.x);
 	glUniform4fv(m_materialDiffuseLoc, 1, &vDiffuse.x);
 	glUniform4fv(m_materialSpecularLoc, 1, &vSpecular.x);
+
+	glActiveTexture(GL_TEXTURE0 + 0);
+	glBindTexture(GL_TEXTURE_2D, diffuseMap->getTextureId());
+	glUniform1i(m_diffuseMapLocation, 0);
 }
 
 SimpleMaterialUniforms::~SimpleMaterialUniforms()
