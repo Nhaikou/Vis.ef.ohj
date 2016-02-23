@@ -56,6 +56,9 @@
     <ClInclude Include="..\..\include\BlinnTextureScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\CubeReflectionScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\assets\FullScreenQuad.vertexshader">
@@ -74,6 +77,12 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="assets\Blinn-phong-textured.vertexShader">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="assets\Blinn-phong-textured-cube.fragmentShader">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="assets\Blinn-phong-textured-cube.vertexShader">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

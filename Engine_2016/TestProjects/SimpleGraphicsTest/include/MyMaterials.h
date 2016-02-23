@@ -40,7 +40,6 @@ public:
 	slmath::vec4 vDiffuse;		// Ambient color of the material (rgba)
 	slmath::vec4 vSpecular;		// Specular color of the material (rgb). Specular exponent (a)
 
-public:
 	SimpleMaterialUniforms(graphics::Shader* shader, SharedShaderValues* sharedValues = 0);
 	virtual~SimpleMaterialUniforms();
 
@@ -59,7 +58,6 @@ class SimpleMaterialWithTextureUniforms : public SimpleMaterialUniforms
 public:
 	core::Ref<graphics::Texture> diffuseMap;
 
-public:
 	SimpleMaterialWithTextureUniforms(graphics::Shader* shader, SharedShaderValues* sharedValues = 0);
 	virtual~SimpleMaterialWithTextureUniforms();
 
@@ -68,4 +66,19 @@ public:
 
 private:
 	GLint m_diffuseMapLocation;
+};
+
+class SimpleMaterialWithTextureUniformsCube : public SimpleMaterialWithTextureUniforms
+{
+public:
+	core::Ref<graphics::TextureCube> cubeMap;
+
+	SimpleMaterialWithTextureUniformsCube(graphics::Shader* shader, SharedShaderValues* sharedValues);
+	virtual~SimpleMaterialWithTextureUniformsCube();
+
+	virtual void getUniformLocations(graphics::Shader* shader);
+	virtual void bind(graphics::Shader* shader);
+
+private:
+	GLint m_cubeMapLoc;
 };

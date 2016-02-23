@@ -1,6 +1,7 @@
 #include "MyMaterials.h"
 
-GlobalShaderUniforms::GlobalShaderUniforms(graphics::Shader* shader, const SharedShaderValues* sharedShaderValues) : ShaderUniforms(shader), m_sharedShaderValues(sharedShaderValues)
+GlobalShaderUniforms::GlobalShaderUniforms(graphics::Shader* shader, const SharedShaderValues* sharedShaderValues)
+	: ShaderUniforms(shader), m_sharedShaderValues(sharedShaderValues)
 {
 	
 }
@@ -84,7 +85,7 @@ SimpleMaterialUniforms::~SimpleMaterialUniforms()
 
 }
 
-// With texture
+// With texture---------------------------------------------------------------------------
 SimpleMaterialWithTextureUniforms::SimpleMaterialWithTextureUniforms(graphics::Shader* shader, SharedShaderValues* sharedValues)
 	: SimpleMaterialUniforms(shader, sharedValues)
 {
@@ -107,6 +108,39 @@ void SimpleMaterialWithTextureUniforms::bind(graphics::Shader* shader)
 }
 
 SimpleMaterialWithTextureUniforms::~SimpleMaterialWithTextureUniforms()
+{
+
+}
+
+// With cube texture-------------------------------------------------------
+
+
+SimpleMaterialWithTextureUniformsCube::SimpleMaterialWithTextureUniformsCube(graphics::Shader* shader, SharedShaderValues* sharedValues)
+	: SimpleMaterialWithTextureUniforms(shader, sharedValues)
+{
+
+}
+
+void SimpleMaterialWithTextureUniformsCube::getUniformLocations(graphics::Shader* shader)
+{
+	SimpleMaterialWithTextureUniforms::getUniformLocations(shader);
+
+	m_cubeMapLoc = glGetUniformLocation(shader->getProgram(), "s_cubeMap");
+}
+
+void SimpleMaterialWithTextureUniformsCube::bind(graphics::Shader* shader)
+{
+	SimpleMaterialWithTextureUniforms::bind(shader);
+
+	// Bind cube texture to texture unit #1
+	glActiveTexture(GL_TEXTURE0 + 1);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMap->getTextureId());
+
+	// Set sampler unit 1 to be used as sampler for cube map uniform
+	glUniform1i(m_cubeMapLoc, 1);
+}
+
+SimpleMaterialWithTextureUniformsCube::~SimpleMaterialWithTextureUniformsCube()
 {
 
 }
