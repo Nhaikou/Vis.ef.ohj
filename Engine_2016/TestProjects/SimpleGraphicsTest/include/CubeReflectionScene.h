@@ -25,6 +25,7 @@ public:
 			"assets/Blinn-phong-textured-cube.fragmentShader", attributes, numAttributes);
 
 		SimpleMaterialWithTextureUniforms* simpleMaterialUniforms = new SimpleMaterialWithTextureUniforms(m_shader, &m_sharedValues);
+		SimpleMaterialWithTextureUniformsCube* simpleMaterialTexture = new SimpleMaterialWithTextureUniformsCube(m_shader, &m_sharedValues);
 
 		// Material values for mesh
 		simpleMaterialUniforms->vAmbient = slmath::vec4(0.5f, 0.2f, 1.0f, 1.0f);
@@ -35,6 +36,9 @@ public:
 		m_image = graphics::Image::loadFromTGA("assets/Fieldstone.tga");
 		m_texture = new graphics::Texture2D();
 		m_texture->setData(m_image);
+
+		simpleMaterialUniforms->diffuseMap = m_texture;
+		m_material = simpleMaterialUniforms;
 
 		// Load cube images
 		eastl::string name = "BedroomCubeMap";
@@ -54,10 +58,8 @@ public:
 
 		// Create cube map and set data to it
 		cubeMap = new graphics::TextureCube();
+		simpleMaterialTexture->cubeMap = cubeMap;
 		cubeMap->setData(cubeImages);
-
-		simpleMaterialUniforms->diffuseMap = m_texture;
-		m_material = simpleMaterialUniforms;
 
 		checkOpenGL();
 
@@ -122,7 +124,7 @@ public:
 
 		//Look at view matrix
 		m_matView = slmath::lookAtRH(
-			slmath::vec3(0.0f, 70.0f, 70.0f),
+			slmath::vec3(0.0f, cos(70.0f), 70.0f),
 			slmath::vec3(0.0f, 15.0f, 0.0f),
 			slmath::vec3(0.0f, 1.0f, 0.0f));
 
