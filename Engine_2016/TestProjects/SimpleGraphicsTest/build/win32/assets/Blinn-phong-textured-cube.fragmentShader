@@ -36,10 +36,10 @@ void main()
 	float NdotL = saturate(dot(vNormal, vLight));
 	float NdotH = saturate(dot(vNormal, vHalf));
 	
-	vec4 vEnvColor = textureCube(s_cubeMap, reflect(vView, vNormal));
 	vec4 texColor = texture2D(s_diffuseMap, vec2(g_texCoordsOS),1.0).rgba;
+	vec4 vEnvColor = textureCube(s_cubeMap, reflect(vView, vNormal));
 
-	vec4 result = vEnvColor;
+	vec4 result = texColor + vEnvColor;
 
 	
 	// Compute the lightning in eye-space
@@ -49,6 +49,7 @@ void main()
 	float SelfShadow = 4.0 * fDiffuse;
 	
 	// Combine lightning with the material properties
+	//gl_FragColor.rgba += result*0.1f;
 	gl_FragColor.rgba = vec4(0.15,0.15,0.15,0.15) * g_Material.vAmbient * result;
 	gl_FragColor.rgba += g_Material.vDiffuse * fDiffuse * result;
 	gl_FragColor.rgb += SelfShadow * vec3 (0.15,0.15,0.15) * g_Material.vSpecular.xyz * fSpecular;

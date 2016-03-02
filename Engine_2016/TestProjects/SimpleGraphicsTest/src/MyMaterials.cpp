@@ -101,7 +101,6 @@ void SimpleMaterialWithTextureUniforms::getUniformLocations(graphics::Shader* sh
 void SimpleMaterialWithTextureUniforms::bind(graphics::Shader* shader)
 {
 	SimpleMaterialUniforms::bind(shader);
-
 	glActiveTexture(GL_TEXTURE0 + 0);
 	glBindTexture(GL_TEXTURE_2D, diffuseMap->getTextureId());
 	glUniform1i(m_diffuseMapLocation, 0);
@@ -131,13 +130,12 @@ void SimpleMaterialWithTextureUniformsCube::getUniformLocations(graphics::Shader
 void SimpleMaterialWithTextureUniformsCube::bind(graphics::Shader* shader)
 {
 	SimpleMaterialWithTextureUniforms::bind(shader);
-
 	// Bind cube texture to texture unit #1
 	glActiveTexture(GL_TEXTURE0 + 1);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMap->getTextureId());
 
 	// Set sampler unit 1 to be used as sampler for cube map uniform
-	glUniform1i(m_cubeMapLoc, 1);
+	glUniform1i(m_cubeMapLoc, 1);	
 }
 
 SimpleMaterialWithTextureUniformsCube::~SimpleMaterialWithTextureUniformsCube()

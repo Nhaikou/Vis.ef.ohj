@@ -24,21 +24,21 @@ public:
 		m_shader = new graphics::Shader("assets/Blinn-phong-textured-cube.vertexShader",
 			"assets/Blinn-phong-textured-cube.fragmentShader", attributes, numAttributes);
 
-		SimpleMaterialWithTextureUniforms* simpleMaterialUniforms = new SimpleMaterialWithTextureUniforms(m_shader, &m_sharedValues);
+		//SimpleMaterialWithTextureUniforms* simpleMaterialTexture = new SimpleMaterialWithTextureUniforms(m_shader, &m_sharedValues);
 		SimpleMaterialWithTextureUniformsCube* simpleMaterialTexture = new SimpleMaterialWithTextureUniformsCube(m_shader, &m_sharedValues);
 
 		// Material values for mesh
-		simpleMaterialUniforms->vAmbient = slmath::vec4(0.5f, 0.2f, 1.0f, 1.0f);
-		simpleMaterialUniforms->vDiffuse = slmath::vec4(0.5f, 0.2f, 1.0f, 1.0f);
-		simpleMaterialUniforms->vSpecular = slmath::vec4(1.0f, 1.0f, 1.0f, 5.0f);
+		simpleMaterialTexture->vAmbient = slmath::vec4(0.5f, 0.2f, 1.0f, 1.0f);
+		simpleMaterialTexture->vDiffuse = slmath::vec4(0.5f, 0.2f, 1.0f, 1.0f);
+		simpleMaterialTexture->vSpecular = slmath::vec4(1.0f, 1.0f, 1.0f, 5.0f);
 
 		// Loading texture
-		m_image = graphics::Image::loadFromTGA("assets/Fieldstone.tga");
+		m_image = graphics::Image::loadFromTGA("assets/CheckerBoard.tga");
 		m_texture = new graphics::Texture2D();
 		m_texture->setData(m_image);
 
-		simpleMaterialUniforms->diffuseMap = m_texture;
-		m_material = simpleMaterialUniforms;
+		simpleMaterialTexture->diffuseMap = m_texture;
+		m_material = simpleMaterialTexture;
 
 		// Load cube images
 		eastl::string name = "BedroomCubeMap";
@@ -124,12 +124,12 @@ public:
 
 		//Look at view matrix
 		m_matView = slmath::lookAtRH(
-			slmath::vec3(0.0f, cos(70.0f), 70.0f),
+			slmath::vec3(0.0f, 70.0f, 70.0f),
 			slmath::vec3(0.0f, 15.0f, 0.0f),
 			slmath::vec3(0.0f, 1.0f, 0.0f));
 
 		//Update teapot model matrix
-		m_matModel = slmath::rotationX(-3.1415 * 0.5f); // 90 degrees around X-axis
+		m_matModel = slmath::rotationX(-3.1415 * 0.25f); // 90 degrees around X-axis
 		m_matModel = slmath::rotationY(m_totalTime) * m_matModel; //Rotate according to total time
 		m_matModel = slmath::translation(slmath::vec3(0.0f, 0.0f, 0.0f)) * m_matModel; //Translate
 

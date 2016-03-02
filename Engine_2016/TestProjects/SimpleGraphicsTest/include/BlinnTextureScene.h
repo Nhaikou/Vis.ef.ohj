@@ -32,7 +32,7 @@ public:
 		simpleMaterialUniforms->vSpecular = slmath::vec4(1.0f, 1.0f, 1.0f, 5.0f);
 
 		// Loading texture
-		m_image = graphics::Image::loadFromTGA("assets/Fieldstone.tga");
+		m_image = graphics::Image::loadFromTGA("assets/CheckerBoard.tga");
 		m_texture = new graphics::Texture2D();
 		m_texture->setData(m_image);
 
