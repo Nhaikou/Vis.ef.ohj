@@ -13,10 +13,11 @@
 #include "BlinnPhongScene.h"
 #include "BlinnTextureScene.h"
 #include "CubeReflectionScene.h"
+#include "RenderTextureScene.h"
 
 // Current scene and max num of scenes
 core::Ref<Scene> m_currentScene = 0;
-static const int NUM_SCENES = 7;
+static const int NUM_SCENES = 8;
 static int sceneIndex = 0; // Current scene index.
 
 // Initialize engine globals (memory manager)
@@ -38,6 +39,7 @@ void changeCurrentScene(int index)
 	
 	refs.printAllocations();
 	m_currentScene = 0;
+	GLenum test = glGetError();
 	refs.printAllocations();
 	assert( index >= 0 && index<NUM_SCENES);
 	switch( index )
@@ -49,6 +51,7 @@ void changeCurrentScene(int index)
 	case 4: m_currentScene = new BlinnPhongScene(); break;
 	case 5: m_currentScene = new BlinnTextureScene(); break;
 	case 6: m_currentScene = new CubeReflectionScene(); break;
+	case 7: m_currentScene = new RenderTextureScene(); break;
 	default:
 		break;
 	}
