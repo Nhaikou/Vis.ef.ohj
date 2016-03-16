@@ -151,11 +151,12 @@ public:
 		float twoPi = 2.0f*3.1415f;
 		float aspectRatio = (float)esContext->width / (float)esContext->height;
 		slmath::vec2 screenScale = slmath::vec2(1.0f / aspectRatio, 1.0f);
-		slmath::vec2 pos = cosf(twoPi*m_totalTime*0.1f)*slmath::vec2(0.5f);
+		//slmath::vec2 pos = cosf(twoPi*m_totalTime*0.1f)*slmath::vec2(0.5f);
+		//slmath::vec2 pos = slmath::vec2(-2.5f, 1.2f);
 		float rot = 0.5f*twoPi + 0.5f*twoPi*cosf(twoPi*m_totalTime*0.1f);
 
 		m_spriteBatch->addSprite(m_renderTarger->getColorBuffer(), slmath::vec2(0.0f), slmath::vec2(1.0f),
-			0xffffffff, pos, rot, 0.0f, slmath::vec2(aspectRatio, 1.0f), screenScale);
+			0xffffffff, slmath::vec2 (-0.75f, 0.75f), 0.0f, 0.0f, slmath::vec2(aspectRatio/2, 1.0f/2), screenScale);
 
 	}
 
